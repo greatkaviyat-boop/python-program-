@@ -1,0 +1,47 @@
+def insert(heap,value):
+    heap.append(value)
+    i = len(heap) - 1
+    while i!=0:
+        parent = (i - 1) // 2
+        if heap[parent] >= heap[i]:
+            break
+        else:
+            heap[parent], heap[i] = heap[i], heap[parent]
+            i = parent
+def delete_max(heap):
+    if not heap:
+        return None
+    max_value = heap[0]
+    heap[0] = heap[-1]
+    heap.pop()
+    i = 0
+    while 2*i+1<len(heap):
+        left = 2*i+1
+        right = 2*i+2
+        if right < len(heap) and heap[right] > heap[left]:
+            larger_child = right
+        else:
+            larger_child = left
+        if heap[i] >= heap[larger_child]:
+            break
+        else:
+            heap[i], heap[larger_child] = heap[larger_child], heap[i]
+            i = larger_child
+    return max_value
+def peek(heap):
+    if not heap:
+        return None
+    else:
+        return heap[0]
+heap = []
+insert(heap,5)
+insert(heap,3)
+insert(heap,4)
+insert(heap,1)
+insert(heap,2)
+insert(heap,6)
+print("Heap:", heap)
+print("Maximum element:", peek(heap))
+print("Deleted:", delete_max(heap))
+print("Heap after deletion:", heap)
+print("ROOT:", peek(heap))
